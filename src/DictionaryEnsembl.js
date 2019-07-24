@@ -87,7 +87,7 @@ module.exports = class DictionaryEnsembl extends Dictionary {
 
   mapEnsemblResToEntryObj(res) {
     return res.entries.map(entry => ({
-      id: this.ensemblDictID + '/' + entry.fields.id[0],
+      id: this.ensemblDictID + '/id/' + entry.fields.id[0],
       dictID: this.ensemblDictID,
       ...((entry.fields.description.length !== 0)
         && {
@@ -116,7 +116,7 @@ module.exports = class DictionaryEnsembl extends Dictionary {
       const mainTerm = this.getMainTerm(entry.fields.name,
         entry.fields.gene_name, entry.fields.gene_synonym);
       return {
-        id: this.ensemblDictID + '/' + entry.fields.id[0],
+        id: this.ensemblDictID + '/id/' + entry.fields.id[0],
         dictID: this.ensemblDictID,
         str: mainTerm,
         ...((entry.fields.description.length !== 0)

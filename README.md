@@ -78,7 +78,7 @@ This specification relates to the function:
  `getEntries(options, cb)`
 
 If the `options.filter.id` is properly defined (with IDs like
-`https://www.ensembl.org/ENSG00000142208`) then we use a query like this:
+`https://www.ensembl.org/id/ENSG00000142208`) then we use a query like this:
 
 ```
  https://www.ebi.ac.uk/ebisearch/ws/rest/ensembl_gene/entry/ENSG00000142208,ENSG00000185686,ENSG00000141510?fields=id%2Cname%2Cdescription%2Cgene_name%2Cgene_synonym%2Ctranscript_count%2Cspecies&format=json
@@ -89,10 +89,10 @@ From the above URL, we provide a brief description for each sub-part:
 - The second part refers to the **domain** of search (*ensembl_gene*)
 - The third part refers to the *entry* endpoint (which allows us to request 
 for entry information associated with entry identifiers)
-- The fourth part is the *entry IDs*, comma seperated (we extract the last part 
+- The fourth part is the *entry IDs*, comma separated (we extract the last part 
 of the Ensembl-specific URI for each ID). Note that for VSM the URI ID is 
-something like: `https://www.ensembl.org/ENSG00000142208` (a non-browsable URI), 
-while the Ensembl entry IDs are created in the form:
+something like: `https://www.ensembl.org/id/ENSG00000142208`, while the Ensembl 
+entry IDs are created in the form:
 `ENS[species prefix][feature type prefix][a unique eleven digit number]`, so 
 that we can immediately tell what kind of feature they refer to and what species 
 they are in (for more info see the [prefix page](https://www.ensembl.org/info/genome/stable_ids/prefixes.html)). 

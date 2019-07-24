@@ -57,7 +57,7 @@ describe('DictionaryEnsembl.js', () => {
       dict.mapEnsemblResToEntryObj(JSON.parse(getIDStr)).should.deep.equal(
         [
           {
-            id: 'https://www.ensembl.org/ENSG00000142208',
+            id: 'https://www.ensembl.org/id/ENSG00000142208',
             dictID: 'https://www.ensembl.org',
             descr: 'AKT serine/threonine kinase 1 [Source:HGNC Symbol;Acc:HGNC:391]',
             terms: [
@@ -99,7 +99,7 @@ describe('DictionaryEnsembl.js', () => {
         .should.deep.equal(
           [
             {
-              id: 'https://www.ensembl.org/ENSOMEG00000002703',
+              id: 'https://www.ensembl.org/id/ENSOMEG00000002703',
               dictID: 'https://www.ensembl.org',
               str: 'opn4.1',
               descr: 'melanopsin-like [Source:NCBI gene;Acc:112144204]',
@@ -148,11 +148,11 @@ describe('DictionaryEnsembl.js', () => {
       const url5 = dict.prepareEntrySearchURL({ sort: 'dictID', page: 101, perPage: 101 });
       const url6 = dict.prepareEntrySearchURL({ sort: 'dictID', page: 101, perPage: 100 });
       const url7 = dict.prepareEntrySearchURL({ sort: 'dictID', page: 10001, perPage: 100 });
-      const url8 = dict.prepareEntrySearchURL({ filter: { id: ['https://www.ensembl.org/ENSG00000141510']},
+      const url8 = dict.prepareEntrySearchURL({ filter: { id: ['https://www.ensembl.org/id/ENSG00000141510']},
         page: 3, perPage: 20 });
       const url9 = dict.prepareEntrySearchURL({ filter: {
-        id: [ '', 'https://www.ensembl.org/ENSMODG00000008869', '  ',
-          'https://www.ensembl.org/ENSG00000142208', 'https://www.ensembl.org/LRG_321' ]
+        id: [ '', 'https://www.ensembl.org/id/ENSMODG00000008869', '  ',
+          'https://www.ensembl.org/id/ENSG00000142208', 'https://www.ensembl.org/id/LRG_321' ]
       }, page: -1, perPage: 101 });
 
       const getAllIDsURLPart = 'domain_source:ensembl_gene';

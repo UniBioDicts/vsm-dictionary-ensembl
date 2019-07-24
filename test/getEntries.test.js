@@ -9,9 +9,9 @@ const dict = new DictionaryEnsembl({log: true});
 
 dict.getEntries({
   filter: { id: [
-    'https://www.ensembl.org/ENSG00000142208',
-    'https://www.ensembl.org/ENSG00000185686',
-    'https://www.ensembl.org/ENSG00000141510'
+    'https://www.ensembl.org/id/ENSG00000142208',
+    'https://www.ensembl.org/id/ENSG00000185686',
+    'https://www.ensembl.org/id/ENSG00000141510'
   ]},
   sort: 'id',
   page: 1,
