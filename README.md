@@ -81,7 +81,7 @@ If the `options.filter.id` is properly defined (with IDs like
 `https://www.ensembl.org/id/ENSG00000142208`) then we use a query like this:
 
 ```
- https://www.ebi.ac.uk/ebisearch/ws/rest/ensembl_gene/entry/ENSG00000142208,ENSG00000185686,ENSG00000141510?fields=id%2Cname%2Cdescription%2Cgene_name%2Cgene_synonym%2Ctranscript_count%2Cspecies&format=json
+https://www.ebi.ac.uk/ebisearch/ws/rest/ensembl_gene/entry/ENSG00000142208,ENSG00000185686,ENSG00000141510?fields=id%2Cname%2Cdescription%2Cgene_name%2Cgene_synonym%2Ctranscript_count%2Cspecies&format=json
 ```
 
 From the above URL, we provide a brief description for each sub-part: 
