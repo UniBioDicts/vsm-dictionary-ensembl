@@ -162,7 +162,7 @@ module.exports = class DictionaryEnsembl extends Dictionary {
       // all IDs
       url = url
         .replace('/entry/$ids', '?query=domain_source:' + this.ebiSearchDomain)
-        + '&fields=' + fixedEncodeURIComponent(this.ensemblFields);
+        + '&fields=' + fixedEncodeURIComponent(this.ensemblFields) + '&sort=id';
 
       // add size and start URL parameters
       let pageSize = this.perPageDefault;

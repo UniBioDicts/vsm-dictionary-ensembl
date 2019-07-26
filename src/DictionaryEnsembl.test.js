@@ -157,21 +157,22 @@ describe('DictionaryEnsembl.js', () => {
 
       const getAllIDsURLPart = 'domain_source:ensembl_gene';
       const formatURLPart = '&format=json';
+      const sortURLPart = '&sort=id';
       const URLfields = 'fields=id%2Cname%2Cdescription%2Cgene_name%2Cgene_synonym%2Ctranscript_count%2Cspecies';
       const expectedURL1 = testURLBase + '?query=' + getAllIDsURLPart
-        + '&' + URLfields + '&size=50&start=0' + formatURLPart;
+        + '&' + URLfields + sortURLPart + '&size=50&start=0' + formatURLPart;
       const expectedURL2 = testURLBase + '?query=' + getAllIDsURLPart
-        + '&' + URLfields + '&size=2&start=0' + formatURLPart;
+        + '&' + URLfields + sortURLPart + '&size=2&start=0' + formatURLPart;
       const expectedURL3 = testURLBase + '?query=' + getAllIDsURLPart
-        + '&' + URLfields + '&size=2&start=0' + formatURLPart;
+        + '&' + URLfields + sortURLPart + '&size=2&start=0' + formatURLPart;
       const expectedURL4 = testURLBase + '?query=' + getAllIDsURLPart
-        + '&' + URLfields + '&size=50&start=50' + formatURLPart;
+        + '&' + URLfields + sortURLPart + '&size=50&start=50' + formatURLPart;
       const expectedURL5 = testURLBase + '?query=' + getAllIDsURLPart
-        + '&' + URLfields + '&size=50&start=5000' + formatURLPart;
+        + '&' + URLfields + sortURLPart + '&size=50&start=5000' + formatURLPart;
       const expectedURL6 = testURLBase + '?query=' + getAllIDsURLPart
-        + '&' + URLfields + '&size=100&start=10000' + formatURLPart;
+        + '&' + URLfields + sortURLPart + '&size=100&start=10000' + formatURLPart;
       const expectedURL7 = testURLBase + '?query=' + getAllIDsURLPart
-        + '&' + URLfields + '&size=100&start=999999' + formatURLPart;
+        + '&' + URLfields + sortURLPart + '&size=100&start=999999' + formatURLPart;
       const expectedURL8 = testURLBase + '/entry/ENSG00000141510'
         + '?' + URLfields + formatURLPart;
       const expectedURL9 = testURLBase + '/entry/ENSMODG00000008869,ENSG00000142208,LRG_321'
