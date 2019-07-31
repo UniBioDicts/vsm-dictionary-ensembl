@@ -1,7 +1,6 @@
 const DictionaryEnsembl = require('./DictionaryEnsembl');
 const chai = require('chai'); chai.should();
 const expect = chai.expect;
-const nock = require('nock');
 const fs = require('fs');
 const path = require('path');
 
@@ -19,18 +18,6 @@ describe('DictionaryEnsembl.js', () => {
 
   const getIDStr = fs.readFileSync(getIDPath, 'utf8');
   const getMatchesForMelanomaStr = fs.readFileSync(getMelanomaPath, 'utf8');
-
-  before(() => {
-    nock.disableNetConnect();
-  });
-
-  afterEach(() => {
-    nock.cleanAll();
-  });
-
-  after(() => {
-    nock.enableNetConnect();
-  });
 
   describe('getDictInfos', () => {
     it('returns empty result when the list of dictIDs does not '
