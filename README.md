@@ -151,7 +151,7 @@ reasonable. There is though a global option `optimap` that you can pass to the
 and use. The **default value is true** and what changes in the mapping table
 above (which is the mapping for `optimap: false` actually) is that the VSM's `descr` 
 entry/match object property takes the combined value of the `species`, the gene
-names (`name`, `gene_name`, `gene_synonym`) and the `description` (in that order). 
+names (`gene_synonym`, `name`) and the `description` (in that order). 
 The reason behind this is that the `description` is sometimes the same for different
 genes when `optimap: false` and thus not distinguishable, so we had to provide 
 a more clarified description string for each entry.
