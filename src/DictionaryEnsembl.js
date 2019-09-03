@@ -285,13 +285,16 @@ module.exports = class DictionaryEnsembl extends Dictionary {
     if (this.optimap) {
       let termArr = terms.map(term => term.str);
       termArr.shift(); // remove mainTerm
-      let termStrings = termArr.join(', ');
+      // usually first synonym is the ensemblID, so put it last
+      if (termArr.length !== 0)
+        termArr.push(termArr.shift());
+      let termStrings = termArr.join('|');
       if (termStrings !== '')
-        termStrings = 'Synonyms: '.concat(termStrings, '; ');
+        termStrings = termStrings.concat('; ');
       const speciesName = (species.length !== 0)
-        ? 'Species: '.concat(species[0], '; ')
+        ? species[0].concat('; ')
         : '';
-      return speciesName.concat(termStrings, 'Description: ', descr);
+      return speciesName.concat(termStrings, descr);
     } else {
       return descr;
     }

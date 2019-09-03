@@ -149,7 +149,7 @@ describe('DictionaryEnsembl.js', () => {
             {
               id: 'https://www.ensembl.org/id/ENSG00000142208',
               dictID: 'https://www.ensembl.org',
-              descr: 'Species: Homo sapiens; Synonyms: AKT1, ENSG00000142208 (HGNC: AKT1), RAC, PRKBA, PKB, AKT; Description: AKT serine/threonine kinase 1 [Source:HGNC Symbol;Acc:HGNC:391]',
+              descr: 'Homo sapiens; RAC|PRKBA|PKB|AKT|ENSG00000142208 (HGNC: AKT1); AKT serine/threonine kinase 1 [Source:HGNC Symbol;Acc:HGNC:391]',
               terms: [
                 {
                   str: 'AKT1'
@@ -232,7 +232,7 @@ describe('DictionaryEnsembl.js', () => {
               id: 'https://www.ensembl.org/id/ENSOMEG00000002703',
               dictID: 'https://www.ensembl.org',
               str: 'opn4.1',
-              descr: 'Species: Oryzias melastigma; Synonyms: opn4.1, ENSOMEG00000002703 (ZFIN_ID: opn4.1), opn4, opn4m2, opn4l, opn4c, melanopsin; Description: melanopsin-like [Source:NCBI gene;Acc:112144204]',
+              descr: 'Oryzias melastigma; opn4|opn4m2|opn4l|opn4c|melanopsin|ENSOMEG00000002703 (ZFIN_ID: opn4.1); melanopsin-like [Source:NCBI gene;Acc:112144204]',
               type: 'T',
               terms: [
                 {
@@ -370,17 +370,17 @@ describe('DictionaryEnsembl.js', () => {
       const description = ['A description string'];
 
       dict.getDescr(species, terms, description).should.equal('A description string');
-      dictOptimized.getDescr(species, terms, description).should.equal('Species: XXX; Synonyms: Synonym-2, Synonym-3; Description: A description string');
+      dictOptimized.getDescr(species, terms, description).should.equal('XXX; Synonym-3|Synonym-2; A description string');
 
       species = [];
       dict.getDescr(species, terms, description).should.equal('A description string');
-      dictOptimized.getDescr(species, terms, description).should.equal('Synonyms: Synonym-2, Synonym-3; Description: A description string');
+      dictOptimized.getDescr(species, terms, description).should.equal('Synonym-3|Synonym-2; A description string');
       terms = [];
       dict.getDescr(species, terms, description).should.equal('A description string');
-      dictOptimized.getDescr(species, terms, description).should.equal('Description: A description string');
+      dictOptimized.getDescr(species, terms, description).should.equal('A description string');
       species = ['YYY'];
       dict.getDescr(species, terms, description).should.equal('A description string');
-      dictOptimized.getDescr(species, terms, description).should.equal('Species: YYY; Description: A description string');
+      dictOptimized.getDescr(species, terms, description).should.equal('YYY; A description string');
 
       cb();
     });
