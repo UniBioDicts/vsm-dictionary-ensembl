@@ -7,6 +7,11 @@ module.exports = class DictionaryEnsembl extends Dictionary {
     const opt = options || {};
     super(opt);
 
+    // optimized mapping for curators
+    this.optimap = (typeof opt.optimap === 'boolean')
+      ? opt.optimap
+      : true;
+
     // Ensembl-specific parameters
     this.ensemblDictID = 'https://www.ensembl.org';
     this.ensemblFields = 'id,name,description,gene_name,gene_synonym,transcript_count,species';
@@ -122,47 +127,47 @@ module.exports = class DictionaryEnsembl extends Dictionary {
   }
 
   mapEnsemblResToEntryObj(res) {
-    return res.entries.map(entry => ({
-      id: this.ensemblDictID + '/id/' + entry.fields.id[0],
-      dictID: this.ensemblDictID,
-      ...((entry.fields.description.length !== 0)
-        && {
-          descr: entry.fields.description[0],
+    return res.entries.map(entry => {
+      const terms = this.buildTerms(entry.fields.name,
+        entry.fields.gene_name, entry.fields.gene_synonym);
+      const descr = this.getDescr(entry.fields.species, terms,
+        entry.fields.description);
+      return {
+        id: this.ensemblDictID + '/id/' + entry.fields.id[0],
+        dictID: this.ensemblDictID,
+        descr: descr,
+        terms: terms,
+        z: {
+          ...((entry.fields.transcript_count.length !== 0)
+            && {
+              transcriptCount: parseInt(entry.fields.transcript_count[0]),
+            }
+          ),
+          ...((entry.fields.species.length !== 0)
+            && {
+              species: entry.fields.species[0],
+            }
+          )
         }
-      ),
-      terms: this.buildTerms(entry.fields.name,
-        entry.fields.gene_name, entry.fields.gene_synonym),
-      z: {
-        ...((entry.fields.transcript_count.length !== 0)
-          && {
-            transcriptCount: parseInt(entry.fields.transcript_count[0]),
-          }
-        ),
-        ...((entry.fields.species.length !== 0)
-          && {
-            species: entry.fields.species[0],
-          }
-        )
-      }
-    }));
+      };
+    });
   }
 
   mapEnsemblResToMatchObj(res, str) {
     return res.entries.map(entry => {
       const mainTerm = this.getMainTerm(entry.fields.name,
         entry.fields.gene_name, entry.fields.gene_synonym);
+      const terms = this.buildTerms(entry.fields.name,
+        entry.fields.gene_name, entry.fields.gene_synonym);
+      const descr = this.getDescr(entry.fields.species, terms,
+        entry.fields.description);
       return {
         id: this.ensemblDictID + '/id/' + entry.fields.id[0],
         dictID: this.ensemblDictID,
         str: mainTerm,
-        ...((entry.fields.description.length !== 0)
-          && {
-            descr: entry.fields.description[0],
-          }
-        ),
+        descr: descr,
         type: mainTerm.startsWith(str) ? 'S' : 'T',
-        terms: this.buildTerms(entry.fields.name,
-          entry.fields.gene_name, entry.fields.gene_synonym),
+        terms: terms,
         z: {
           ...((entry.fields.transcript_count.length !== 0)
             && {
@@ -273,6 +278,21 @@ module.exports = class DictionaryEnsembl extends Dictionary {
       return name[0];
     else // worst case, should never happen
       return geneSynonyms[0];
+  }
+
+  getDescr(species, terms, description) {
+    const descr = (description.length !== 0) ? description[0] : '';
+    if (this.optimap) {
+      let termStrings = terms.map(term => term.str).join(', ');
+      if (termStrings !== '')
+        termStrings = 'Synonyms: '.concat(termStrings, '; ');
+      const speciesName = (species.length !== 0)
+        ? 'Species: '.concat(species[0], '; ')
+        : '';
+      return speciesName.concat(termStrings, 'Description: ', descr);
+    } else {
+      return descr;
+    }
   }
 
   sortEntries(arr, options) {

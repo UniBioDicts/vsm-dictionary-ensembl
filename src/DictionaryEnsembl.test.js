@@ -8,7 +8,9 @@ describe('DictionaryEnsembl.js', () => {
 
   const testURLBase = 'http://test';
   const dict =
-    new DictionaryEnsembl({ baseURL: testURLBase, log: true });
+    new DictionaryEnsembl({ baseURL: testURLBase, log: true, optimap: false });
+  const dictOptimized =
+    new DictionaryEnsembl({ baseURL: testURLBase, log: true }); // optimap: true
 
   const melanomaStr = 'melanoma';
   const noResultsStr = 'somethingThatDoesNotExist';
@@ -141,6 +143,41 @@ describe('DictionaryEnsembl.js', () => {
         ]
       );
 
+      dictOptimized.mapEnsemblResToEntryObj(JSON.parse(getIDStr))
+        .should.deep.equal(
+          [
+            {
+              id: 'https://www.ensembl.org/id/ENSG00000142208',
+              dictID: 'https://www.ensembl.org',
+              descr: 'Species: Homo sapiens; Synonyms: AKT1, ENSG00000142208 (HGNC: AKT1), RAC, PRKBA, PKB, AKT; Description: AKT serine/threonine kinase 1 [Source:HGNC Symbol;Acc:HGNC:391]',
+              terms: [
+                {
+                  str: 'AKT1'
+                },
+                {
+                  str: 'ENSG00000142208 (HGNC: AKT1)'
+                },
+                {
+                  str: 'RAC'
+                },
+                {
+                  str: 'PRKBA'
+                },
+                {
+                  str: 'PKB'
+                },
+                {
+                  str: 'AKT'
+                }
+              ],
+              z: {
+                transcriptCount: 20,
+                species: 'Homo sapiens'
+              }
+            }
+          ]
+        );
+
       cb();
     });
   });
@@ -156,6 +193,46 @@ describe('DictionaryEnsembl.js', () => {
               dictID: 'https://www.ensembl.org',
               str: 'opn4.1',
               descr: 'melanopsin-like [Source:NCBI gene;Acc:112144204]',
+              type: 'T',
+              terms: [
+                {
+                  str: 'opn4.1'
+                },
+                {
+                  str: 'ENSOMEG00000002703 (ZFIN_ID: opn4.1)'
+                },
+                {
+                  str: 'opn4'
+                },
+                {
+                  str: 'opn4m2'
+                },
+                {
+                  str: 'opn4l'
+                },
+                {
+                  str: 'opn4c'
+                },
+                {
+                  str: 'melanopsin'
+                }
+              ],
+              z: {
+                transcriptCount: 1,
+                species: 'Oryzias melastigma'
+              }
+            }
+          ]
+        );
+
+      dictOptimized.mapEnsemblResToMatchObj(JSON.parse(getMatchesForMelanomaStr), 'melanoma')
+        .should.deep.equal(
+          [
+            {
+              id: 'https://www.ensembl.org/id/ENSOMEG00000002703',
+              dictID: 'https://www.ensembl.org',
+              str: 'opn4.1',
+              descr: 'Species: Oryzias melastigma; Synonyms: opn4.1, ENSOMEG00000002703 (ZFIN_ID: opn4.1), opn4, opn4m2, opn4l, opn4c, melanopsin; Description: melanopsin-like [Source:NCBI gene;Acc:112144204]',
               type: 'T',
               terms: [
                 {
@@ -279,6 +356,31 @@ describe('DictionaryEnsembl.js', () => {
         { page: 1, perPage: 2 });
       const paginationURLPart4 = '&size=2&start=0';
       url8.should.equal(expectedURL + paginationURLPart4 + formatURLPart);
+
+      cb();
+    });
+  });
+
+  describe('getDescr', () => {
+    it('returns proper description string', cb => {
+      let species = ['XXX'];
+      let terms = [
+        { str: 'mainTerm' }, { str: 'Synonym-2'}, { str: 'Synonym-3'}
+      ];
+      const description = ['A description string'];
+
+      dict.getDescr(species, terms, description).should.equal('A description string');
+      dictOptimized.getDescr(species, terms, description).should.equal('Species: XXX; Synonyms: mainTerm, Synonym-2, Synonym-3; Description: A description string');
+
+      species = [];
+      dict.getDescr(species, terms, description).should.equal('A description string');
+      dictOptimized.getDescr(species, terms, description).should.equal('Synonyms: mainTerm, Synonym-2, Synonym-3; Description: A description string');
+      terms = [];
+      dict.getDescr(species, terms, description).should.equal('A description string');
+      dictOptimized.getDescr(species, terms, description).should.equal('Description: A description string');
+      species = ['YYY'];
+      dict.getDescr(species, terms, description).should.equal('A description string');
+      dictOptimized.getDescr(species, terms, description).should.equal('Species: YYY; Description: A description string');
 
       cb();
     });
