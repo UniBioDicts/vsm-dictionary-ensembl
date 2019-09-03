@@ -283,7 +283,9 @@ module.exports = class DictionaryEnsembl extends Dictionary {
   getDescr(species, terms, description) {
     const descr = (description.length !== 0) ? description[0] : '';
     if (this.optimap) {
-      let termStrings = terms.map(term => term.str).join(', ');
+      let termArr = terms.map(term => term.str);
+      termArr.shift(); // remove mainTerm
+      let termStrings = termArr.join(', ');
       if (termStrings !== '')
         termStrings = 'Synonyms: '.concat(termStrings, '; ');
       const speciesName = (species.length !== 0)

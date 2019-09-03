@@ -370,11 +370,11 @@ describe('DictionaryEnsembl.js', () => {
       const description = ['A description string'];
 
       dict.getDescr(species, terms, description).should.equal('A description string');
-      dictOptimized.getDescr(species, terms, description).should.equal('Species: XXX; Synonyms: mainTerm, Synonym-2, Synonym-3; Description: A description string');
+      dictOptimized.getDescr(species, terms, description).should.equal('Species: XXX; Synonyms: Synonym-2, Synonym-3; Description: A description string');
 
       species = [];
       dict.getDescr(species, terms, description).should.equal('A description string');
-      dictOptimized.getDescr(species, terms, description).should.equal('Synonyms: mainTerm, Synonym-2, Synonym-3; Description: A description string');
+      dictOptimized.getDescr(species, terms, description).should.equal('Synonyms: Synonym-2, Synonym-3; Description: A description string');
       terms = [];
       dict.getDescr(species, terms, description).should.equal('A description string');
       dictOptimized.getDescr(species, terms, description).should.equal('Description: A description string');
