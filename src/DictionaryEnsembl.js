@@ -365,7 +365,7 @@ module.exports = class DictionaryEnsembl extends Dictionary {
           isJSONString(response)
             ? cb(JSON.parse(response))
             : cb(JSON.parse('{ "status": ' + req.status
-            + ', "errors": [' + JSON.stringify(response) + ']}'));
+            + ', "error": ' + JSON.stringify(response) + '}'));
         }
         else {
           try {
