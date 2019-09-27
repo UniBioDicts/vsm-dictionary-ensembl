@@ -1,5 +1,6 @@
 const Dictionary = require('vsm-dictionary');
-const { getLastPartOfURL, fixedEncodeURIComponent, removeDuplicates } = require('./fun');
+const { getLastPartOfURL, fixedEncodeURIComponent,
+  removeDuplicates, isJSONString } = require('./fun');
 
 module.exports = class DictionaryEnsembl extends Dictionary {
 
@@ -47,29 +48,16 @@ module.exports = class DictionaryEnsembl extends Dictionary {
     if (!this.hasProperFilterIDProperty(options)) {
       return cb(null, res);
     } else {
-      // keep only the domain-specific dictID(s)
-      let idList = options.filter.id.filter(dictID =>
-        dictID.trim() === this.ensemblDictID
-      );
-
-      if (idList.length === 0) {
-        return cb(null, {items: []});
-      } else {
-        return cb(null, res);
-      }
+      return (options.filter.id.includes(this.ensemblDictID))
+        ? cb(null, res)
+        : cb(null, { items: [] });
     }
   }
 
   getEntries(options, cb) {
-    if (this.hasProperFilterDictIDProperty(options)) {
-      // keep only the domain-specific dictID(s)
-      let idList = options.filter.dictID.filter(dictID =>
-        dictID.trim() === this.ensemblDictID
-      );
-
-      if (idList.length === 0) {
-        return cb(null, { items: [] });
-      }
+    if (this.hasProperFilterDictIDProperty(options)
+      && !options.filter.dictID.includes(this.ensemblDictID)) {
+      return cb(null, { items: [] });
     }
 
     const url = this.prepareEntrySearchURL(options);
@@ -81,7 +69,7 @@ module.exports = class DictionaryEnsembl extends Dictionary {
       if (err) return cb(err);
       let entryObjArray = this.mapEnsemblResToEntryObj(res);
 
-      // When requesting specific list of ids, do sorting and triming
+      // When requesting specific list of ids, do sorting and trimming
       let arr = entryObjArray;
       if (this.hasProperFilterIDProperty(options)) {
         arr = this.trimEntryObjArray(
@@ -99,15 +87,9 @@ module.exports = class DictionaryEnsembl extends Dictionary {
   getEntryMatchesForString(str, options, cb) {
     if ((!str) || (str.trim() === '')) return cb(null, {items: []});
 
-    if (this.hasProperFilterDictIDProperty(options)) {
-      // keep only the domain-specific dictID(s)
-      let idList = options.filter.dictID.filter(dictID =>
-        dictID.trim() === this.ensemblDictID
-      );
-
-      if (idList.length === 0) {
-        return cb(null, { items: [] });
-      }
+    if (this.hasProperFilterDictIDProperty(options)
+      && !options.filter.dictID.includes(this.ensemblDictID)) {
+      return cb(null, { items: [] });
     }
 
     const url = this.prepareMatchStringSearchURL(str, options);
@@ -378,8 +360,13 @@ module.exports = class DictionaryEnsembl extends Dictionary {
     const req = this.getReqObj();
     req.onreadystatechange = function () {
       if (req.readyState === 4) {
-        if (req.status !== 200)
-          cb(JSON.parse(req.responseText));
+        if (req.status !== 200) {
+          let response = req.responseText;
+          isJSONString(response)
+            ? cb(JSON.parse(response))
+            : cb(JSON.parse('{ "status": ' + req.status
+            + ', "errors": [' + JSON.stringify(response) + ']}'));
+        }
         else {
           try {
             const response = JSON.parse(req.responseText);

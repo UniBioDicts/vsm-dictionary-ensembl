@@ -61,6 +61,19 @@ In the next sections we will explain the mapping between the data
 offered by EBI Search's API and the corresponding VSM objects. Find the 
 documentation for the API here: https://www.ebi.ac.uk/ebisearch/documentation.ebi
 
+Note that if we receive an error response from the EBI Search servers (see the 
+URL requests for `getEnties` and `getEntryMatchesForString` below) that is not a
+JSON string that we can parse, we formulate the error as a JSON object ourselves 
+in the following format:
+```
+{
+  status: <number>,
+  error: <response> 
+}
+```
+where the *response* from the server is JSON stringified.
+
+
 ### Map Ensembl to DictInfo VSM object
 
 This specification relates to the function:  
@@ -92,7 +105,7 @@ If the `options.filter.id` is properly defined (with IDs like
 https://www.ebi.ac.uk/ebisearch/ws/rest/ensembl_gene/entry/ENSG00000142208,ENSG00000185686,ENSG00000141510?fields=id%2Cname%2Cdescription%2Cgene_name%2Cgene_synonym%2Ctranscript_count%2Cspecies&format=json
 ```
 
-From the above URL, we provide a brief description for each sub-part: 
+For the above URL, we provide a brief description for each sub-part: 
 - The first part refers to the EBI Search's main REST endpoint: https://www.ebi.ac.uk/ebisearch/ws/rest/
 - The second part refers to the **domain** of search (*ensembl_gene*)
 - The third part refers to the *entry* endpoint (which allows us to request 
