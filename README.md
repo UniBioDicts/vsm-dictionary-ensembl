@@ -1,5 +1,11 @@
 # vsm-dictionary-ensembl
 
+<!-- badges: start -->
+[![Travis build status](https://travis-ci.org/vsmjs/vsm-dictionary-ensembl.svg?branch=master)](https://travis-ci.org/vsmjs/vsm-dictionary-ensembl)
+[![npm version](https://img.shields.io/npm/v/vsm-dictionary-ensembl)](https://www.npmjs.com/package/vsm-dictionary-ensembl)
+[![Downloads](https://img.shields.io/npm/dm/vsm-dictionary-ensembl)](https://www.npmjs.com/package/vsm-dictionary-ensembl)
+<!-- badges: end -->
+
 ## Summary
 
 `vsm-dictionary-ensembl` is an implementation 
