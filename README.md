@@ -195,3 +195,7 @@ case as well as the mapping shown in the table above. Also for the `size` and
 `start` parameters the same things apply as in the `getEntries` specification.
  
 No sorting whatsoever is done on the server or client side.
+
+## License
+
+This project is licensed under the AGPL license - see [LICENSE.md](LICENSE.md).
