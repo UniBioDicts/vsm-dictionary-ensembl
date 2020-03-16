@@ -1,7 +1,7 @@
 # vsm-dictionary-ensembl
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/vsmjs/vsm-dictionary-ensembl.svg?branch=master)](https://travis-ci.org/vsmjs/vsm-dictionary-ensembl)
+[![Build Status](https://travis-ci.com/UniBioDicts/vsm-dictionary-ensembl.svg?branch=master)](https://travis-ci.com/UniBioDicts/vsm-dictionary-ensembl)
 [![npm version](https://img.shields.io/npm/v/vsm-dictionary-ensembl)](https://www.npmjs.com/package/vsm-dictionary-ensembl)
 [![Downloads](https://img.shields.io/npm/dm/vsm-dictionary-ensembl)](https://www.npmjs.com/package/vsm-dictionary-ensembl)
 <!-- badges: end -->
@@ -14,6 +14,10 @@ of the 'VsmDictionary' parent-class/interface (from the package
 the [EBI Search RESTful Web Services](https://www.ebi.ac.uk/ebisearch/apidoc.ebi) 
 to interact with the Ensembl genome database and translate the provided 
 vertebrate gene information into a VSM-specific format.
+
+## Install
+
+Run: `npm install`
 
 ## Example use
 
