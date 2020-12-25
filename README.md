@@ -1,7 +1,7 @@
 # vsm-dictionary-ensembl
 
 <!-- badges: start -->
-[![Build Status](https://travis-ci.com/UniBioDicts/vsm-dictionary-ensembl.svg?branch=master)](https://travis-ci.com/UniBioDicts/vsm-dictionary-ensembl)
+[![Node.js CI](https://github.com/UniBioDicts/vsm-dictionary-ensembl/workflows/Node.js%20CI/badge.svg)](https://github.com/UniBioDicts/vsm-dictionary-ensembl/actions)
 [![codecov](https://codecov.io/gh/UniBioDicts/vsm-dictionary-ensembl/branch/master/graph/badge.svg)](https://codecov.io/gh/UniBioDicts/vsm-dictionary-ensembl)
 [![npm version](https://img.shields.io/npm/v/vsm-dictionary-ensembl)](https://www.npmjs.com/package/vsm-dictionary-ensembl)
 [![Downloads](https://img.shields.io/npm/dm/vsm-dictionary-ensembl)](https://www.npmjs.com/package/vsm-dictionary-ensembl)
